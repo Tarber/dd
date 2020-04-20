@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>codeTogether</title>
+    <link rel="shortcut icon" href="img/start.png"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="script/config.js"></script>
+  	<script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="script/function.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <body>
+      <div class="wrapper" id='section1'>
+        <div class="sct brand" id='sctbrand'><h3 style="text-align: center;">Welcome to codeTogether.</h3>
+        </div>
+        <div class="add" style="display: none;"></div>
+        <div class="sct login">
+        <form>
+          <h3>Choose one</h3>
+          <a href="#section2" style="text-decoration: none"><button id="fr">Add Room</button></a> 
+          <a href="#section3" style="text-decoration: none"><button id="fr">Join Room</button></a> 
+        </form>
+        </div> 
+      </div> 
+      <div class="wrapper" id='section2'>
+        <div class="sct brand" id='sctbrand'>
+          <a href="#section1">
+            <div id='fixot'>
+              <i class='fas fa-arrow-left' style=' font-size: 50px;color: white;'></i>
+            </div></a>
+            <div class="row">
+              <a href="#section2" data-toggle="tooltip" data-placement="top" title="Web">
+                <div class="col">
+                  <i id='web' class='fab fa-html5' style='font-size:64px;color:white' onclick="choose()"></i>
+                </div>
+              </a>
+              <a href="#section2" data-toggle="tooltip" data-placement="top" title="Python">
+                <div class="col"  >
+                  <i id='python' class='fab fa-python' style='font-size:64px;color:white' onclick="choosepy()"></i>
+                </div>
+              </a>
+              <a href="#section2" data-toggle="tooltip" data-placement="top" title="Java">
+                <div class="col"  >
+                  <i id='java' class='fab fa-java' style='font-size:64px;color:white' onclick="choosejava()"></i>
+                </div>
+              </a>
+            </div>          
+        </div>
+        <div class="sct login">
+          <iframe name="formDestination" id='frame' style="display: none;" ></iframe>
+          <form  id='ad' method='POST'>
+            <input type="hidden" id='ou' name="ur">
+            <input id="deh" pattern="[a-zA-Z]+" type="text" style="display:none;width: 100%;" name="nameadmin" oninput="ok()" maxlength="11" placeholder="Insert Username">  
+            <input id='ko' type="submit" name="submit" value="ADD" style="display: none;margin:1rem;">
+          </form>  
+        </div> 
+      </div>
+      <div class="wrapper" id='section3'>
+        <div class="sct brand" id='sctbrand'>
+          <a href="#section1">
+            <div id="fix2">
+              <i class='fas fa-arrow-left' style=' font-size: 50px;color: white;'></i>
+            </div>
+          </a>
+          <h3 style="text-align: center;">Insert the key to join the room</h3>
+        </div>
+        <div class="sct login">
+          <form id='jain' method="POST">
+            <label style="display:block;" for="username">
+              <input type="text" data-toggle="noto" data-placement="top"  name="key" id='username' oninput="co()" maxlength="11" placeholder="Inset the key(11 charecters)">
+              <input type="text" pattern="[a-zA-Z]+" name="usernames" style="display: none;" id='usernames' oninput="coo()" placeholder="Insert username">
+              <input type="hidden" name="href" style="display: none;" id='href'>
+              <span id="user-availability-status"></span>
+              
+            </label>
+            <input type="submit" name="submit"  style='display: none;margin:1rem; 'id ='setik'  value="join">
+          </form>    
+        </div> 
+      </div> 
+  </body>
+<script type="text/javascript" src="script/animation.js"></script>
+  <script type="text/javascript">
+
+    let socket = io.connect(mms);
+    socket.on('avi',(goh)=>{
+      var ios=goh.avi;
+      var href=goh.href;
+      var ki=goh.key
+      var seyo=document.getElementById("username").value;
+      if(ki==seyo){
+          if(ios=="aviable" && href=="web"){
+            document.getElementsByTagName("form")[2].setAttribute("action", "/join");
+            document.getElementById('href').value = href; 
+            document.getElementById('setik').style.display = 'block';
+            $('#username').removeAttr('title');
+            $('#username').tooltip('hide')
+          }
+          if(ios=="aviable" && href=="java"){
+            document.getElementsByTagName("form")[2].setAttribute("action", "/join");
+            document.getElementById('href').value = href; 
+            document.getElementById('setik').style.display = 'block';
+            $('#username').removeAttr('title');
+            $('#username').tooltip('hide')
+          }
+          if(ios=="aviable" && href=="python"){
+            document.getElementsByTagName("form")[2].setAttribute("action", "/join");
+            document.getElementById('href').value = href; 
+            document.getElementById('usernames').style.display = 'block';
+            $('#username').removeAttr('title');
+            $('#username').tooltip('hide')
+          }
+          if(ios=="notaviable"){
+            console.log('notaviable')
+            document.getElementById('setik').style.display = 'none';
+            $('#username').attr('title', 'Key not Found');
+            $(document).ready(function(){  
+              $('[data-toggle="noto"]').tooltip({
+                trigger:'manual',
+                animation:true
+              });   
+              console.log("r")
+            $('#username').tooltip('show')
+            });
+          } 
+      }     
+    })
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();     
+      });
+  </script>
+  </html>

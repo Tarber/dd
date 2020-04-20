@@ -1,0 +1,26 @@
+<script type="text/javascript" src="script/config.js"></script>
+<textarea style="display:none" id='key'><%=key%></textarea>
+<textarea style="display:none" id='value'><%=username%></textarea>
+<textarea style="display:none" id='href'><%=href%></textarea>
+  <title>Loading</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="containerl" style="top: 50%;right: 50%;position: absolute;left: 50%;width:100%;bottom: 50%;">
+  <button style="background:black;border:1px solid black" class="btn btn-primary">
+    <span class="spinner-border spinner-border-sm"></span>
+    Loading..
+  </button>
+</div>
+<script>
+	var valueyo=document.getElementById("value").value;
+	var keyoo=document.getElementById("key").value;
+	var href=document.getElementById("href").value;
+	var hrefp=mms+href+"?key="+keyoo+"&user="+valueyo+"";
+	console.log(hrefp)
+	document.location=hrefp;
+</script>

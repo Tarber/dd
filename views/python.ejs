@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <script type="text/javascript">
+      
+    </script>
+    <meta charset="utf-8">
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js'></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="script/config.js"></script>
+    <link rel="stylesheet" href="css/menu.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <title>Python Editor</title>
+    <link rel="shortcut icon" href="img/python.png"/>
+  </head>
+  <script type="text/javascript">
+    var url_string =window.location.href
+    var url = new URL(url_string);
+    var de = url.searchParams.get("key");
+    var nameofuser = url.searchParams.get("user");
+  </script>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" onclick="cayrahex()" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+        <a class="navbar-brand" id='hisname' href="#"><script>document.write(nameofuser);</script>  </a>
+          </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+        <li><a href="#" onclick="run()"><span class="glyphicon glyphicon-play"></span>Run</a></li>
+        <li><a href="#" onclick="down()"><span class="glyphicon glyphicon-download"></span>Download</a></li>
+        <li>
+            <a href="#" style="cursor:pointer;">
+              <form action="/fileupload" id='d' method="POST">
+               <li style="cursor:pointer;" onclick="xoz()"><input id="xozuk" type="file" onchange="uppy()" name="filetoupload">
+                <span class="glyphicon glyphicon-upload"></span>Upload</li>
+                
+              </form>
+            </a>
+        </li>
+        <li style="margin:-5px"><a id='fe'  href="#">Key:<input type="text" id='hide' name=""readonly="readonly"><i id='c' onclick="copy()" class='fas fa-copy'></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>  
+    <div class="content">
+      <div class="live">
+        <div class="liveText">
+          <div id="editor"><%=textpython%></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div id="compiler">
+        <div id='setion1' ><a href="#" onclick="cose()"  ><span id="close"  class="glyphicon glyphicon-remove"></div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      let socket = io(mms+'?room=<%=key%>&user=<%=username%>')
+      let audio = new Audio()
+      audio.src = 'audio/sms-alert-3-daniel_simon.wav'
+      document.onkeyup = (e)=>{
+        var code = editor.getValue();
+          socket.emit('python',{char:code})
+          iam()
+      }
+      socket.on('yokey',(data)=>{
+  if(data.yourkey==de){
+
+
+
+      if(url.searchParams.get("user")!=data.yourname){
+      socket.on('text',(text)=>{
+        code=text.cods
+        var ee=editor.getCursorPosition()
+        editor.setValue(code);
+        editor.clearSelection();
+        editor.selection.moveTo(ee.row, ee.column)
+      })
+    }
+            }
+    })
+      document.getElementById('hide').value=de
+      document.getElementById('compiler').innerHTML+='root@'+nameofuser+':~$<span id="margat">_</span>'
+    </script>
+    <script src="script/jquery-linedtextarea.js"></script>
+    <script type="text/javascript" src="script/animation.js"></script>
+    <script type="text/javascript" src="script/function.js"></script> 
+  </body>
+</html>
+<script type="text/javascript">
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.getSession().setMode("ace/mode/python");
+
+</script>
